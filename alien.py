@@ -13,6 +13,7 @@ class Alien(Sprite):
         self.screen = screen
         self.ai_settings = ai_settings
         self.value=150
+        self.dead = False
 
         # moving animation
         self.frames = [pygame.image.load('images/alienPaint.png'), pygame.image.load('images/alien-1Paint.png')]
@@ -22,6 +23,10 @@ class Alien(Sprite):
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
 
+        # explode animation
+        self.die_frames = [pygame.image.load('images/alienEX1.png'),
+                           pygame.image.load('images/alienEX2.png'),
+                           pygame.image.load('images/alienEX3.png')]
         # current animation
         self.animation = Timer(self.frames, wait=500)
 
@@ -46,6 +51,10 @@ class Alien(Sprite):
                    self.ai_settings.fleet_direction)
         self.rect.x = self.x
 
+    def die(self):
+        self.animation = Timer(self.die_frames, wait=100, looponce=True)
+        self.dead = True
+
    # def blitme(self):
     #    """Draw the alien at its current location."""
      #   self.screen.blit(self.image, self.rect)
@@ -60,6 +69,10 @@ class Alien_two(Alien):
         # Load the alien image, and set its rect attribute.
         self.frames = [pygame.image.load('images/alien2Paint.png'), pygame.image.load('images/alien2-1Paint.png')]
         self.rect = self.frames[0].get_rect()
+        # explode animation
+        self.die_frames = [pygame.image.load('images/alien2EX1.png'),
+                           pygame.image.load('images/alien2EX2.png'),
+                           pygame.image.load('images/alien2EX3.png')]
         self.animation = Timer(self.frames, wait=random.randint(2, 5) * 100)
         self.value = 100
 
@@ -73,5 +86,9 @@ class Alien_three(Alien):
         # Load the alien image, and set its rect attribute.
         self.frames = [pygame.image.load('images/alien3Paint.png'), pygame.image.load('images/alien3-1Paint.png')]
         self.rect = self.frames[0].get_rect()
+        # explode animation
+        self.die_frames = [pygame.image.load('images/alien3EX1.png'),
+                           pygame.image.load('images/alien3EX2.png'),
+                           pygame.image.load('images/alien3EX3.png')]
         self.animation = Timer(self.frames, wait=random.randint(2, 5) * 100)
         self.value = 50

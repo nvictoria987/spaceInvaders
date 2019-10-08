@@ -140,8 +140,10 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
     if collisions:
         for aliens in collisions.values():
             for alientype in aliens:
-                stats.score += alientype.value * len(aliens)
-                sb.prep_score()
+                if not alientype.dead:
+                    stats.score += alientype.value * len(aliens)
+                    sb.prep_score()
+                    alientype.die()
         check_high_score(stats, sb)
 
     if len(aliens) == 0:
@@ -173,9 +175,14 @@ def change_fleet_direction(ai_settings, aliens):
 
 def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets):
     """Respond to ship being hit by alien."""
+
     if stats.ships_left > 0:
         # Decrement ships_left.
         stats.ships_left -= 1
+        ship.die()
+
+        if ship.die_anim.finished:
+            ship.reset()
 
         # Update scoreboard.
         sb.prep_ships()
@@ -184,6 +191,8 @@ def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets):
         stats.game_active = False
         pygame.mouse.set_visible(True)
 
+    if ship.die_anim.finished:
+        ship.reset()
     # Empty the list of aliens and bullets.
     aliens.empty()
     bullets.empty()
