@@ -8,6 +8,7 @@ from button import Button
 from button import Button_high
 from ship import Ship
 from startscreen import Startscreen
+from game_sound import Game_sound
 from ufo import ufo
 import game_functions as gf
 from random import randint
@@ -25,6 +26,7 @@ def run_game():
     play_button = Button(ai_settings, screen, "Play")
     high_score_button = Button_high(ai_settings, screen, "High Score")
     startsc = Startscreen(ai_settings, screen, play_button, high_score_button)
+    game=Game_sound()
 
     # Create an instance to store game statistics, and a scoreboard.
     stats = GameStats(ai_settings)
@@ -49,14 +51,14 @@ def run_game():
     # Start the main loop for the game.
     while True:
         gf.check_events(ai_settings, screen, stats, sb, play_button, ship,
-                        aliens, bullets)
+                        aliens, bullets, game)
 
         if stats.game_active:
             ship.update()
           #  gf.create_ufo(ai_settings,screen,aliens)
 
             gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens,
-                              bullets)
+                              bullets,game)
             gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens,
                              bullets)
             gf.update_ufo(ai_settings, screen, ufo_respawn_time, ufo_timer, aliens, delta_time)

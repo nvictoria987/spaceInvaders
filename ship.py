@@ -62,7 +62,8 @@ class Ship(Sprite):
                   pygame.image.load('images/mainshipEX2.png'),
                   pygame.image.load('images/mainshipEX3.png'),
                   pygame.image.load('images/mainshipEX4.png'),
-                  pygame.image.load('images/mainshipEX5.png')]
+                  pygame.image.load('images/mainshipEX5.png'),
+                  pygame.image.load('images/mainship.png')]
         self.die_anim = Timer(frames, wait=100, looponce=True)
         self.dead=True
         #self.reset()
